@@ -3,7 +3,7 @@ MAKEFLAGS+=-r -j
 config=debug
 files=demo/pirate.obj
 
-BUILD=build/$(config)
+BUILD=build/$(config)$(subst 1,-nosimd,$(nosimd))
 
 LIBRARY_SOURCES=$(wildcard src/*.cpp)
 LIBRARY_OBJECTS=$(LIBRARY_SOURCES:%=$(BUILD)/%.o)
@@ -40,10 +40,6 @@ ifeq ($(config),trace)
 	CXXFLAGS+=-DTRACE=2
 endif
 
-ifeq ($(config),scalar)
-	CXXFLAGS+=-O3 -DNDEBUG -DMESHOPTIMIZER_NO_SIMD
-endif
-
 ifeq ($(config),release)
 	CXXFLAGS+=-O3 -DNDEBUG
 endif
@@ -51,6 +47,10 @@ endif
 ifeq ($(config),coverage)
 	CXXFLAGS+=-coverage
 	LDFLAGS+=-coverage
+endif
+
+ifeq ($(nosimd),1)
+	CXXFLAGS+=-DMESHOPTIMIZER_NO_SIMD
 endif
 
 ifeq ($(config),sanitize)

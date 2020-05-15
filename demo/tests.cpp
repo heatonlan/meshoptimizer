@@ -711,7 +711,7 @@ static void simplifyPointsStuck()
 	assert(meshopt_simplifyPoints(0, vb, 3, 12, 0) == 0);
 }
 
-static void runTestsOnce()
+void runTests()
 {
 	decodeIndexV0();
 	decodeIndexV1();
@@ -757,26 +757,4 @@ static void runTestsOnce()
 	simplifyStuck();
 	simplifySloppyStuck();
 	simplifyPointsStuck();
-}
-
-namespace meshopt
-{
-extern unsigned int cpuid;
-}
-
-void runTests()
-{
-	runTestsOnce();
-
-#if !(defined(__AVX__) || defined(__SSSE3__)) && (defined(_M_IX86) || defined(_M_X64) || defined(__i386__) || defined(__x86_64__))
-	// When SSSE3/AVX support isn't enabled unconditionally, we use a cpuid-based fallback
-	// It's useful to be able to test scalar code in this case, so we temporarily fake the feature bits
-	// and restore them later
-	unsigned int cpuid = meshopt::cpuid;
-	meshopt::cpuid = 0;
-
-	runTestsOnce();
-
-	meshopt::cpuid = cpuid;
-#endif
 }
