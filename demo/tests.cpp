@@ -761,7 +761,7 @@ static void runTestsOnce()
 
 namespace meshopt
 {
-extern unsigned int cpuid;
+__declspec(dllimport) unsigned int cpuid;
 }
 
 void runTests()

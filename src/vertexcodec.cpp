@@ -1092,8 +1092,9 @@ static unsigned int getCpuFeatures()
 	return cpuinfo[2];
 }
 
-unsigned int cpuid = getCpuFeatures();
+__declspec(dllexport) unsigned int cpuid = getCpuFeatures();
 #endif
+
 
 } // namespace meshopt
 
