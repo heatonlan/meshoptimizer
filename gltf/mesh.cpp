@@ -745,8 +745,8 @@ void processMesh(Mesh& mesh, const Settings& settings)
 }
 
 #ifndef NDEBUG
-extern unsigned char* meshopt_simplifyDebugKind;
-extern unsigned int* meshopt_simplifyDebugLoop;
+__declspec(dllimport) unsigned char* meshopt_simplifyDebugKind;
+__declspec(dllimport) unsigned int* meshopt_simplifyDebugLoop;
 
 void debugSimplify(const Mesh& source, Mesh& kinds, Mesh& loops, float ratio)
 {
